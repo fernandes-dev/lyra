@@ -5,6 +5,12 @@ import bcrypt from 'bcrypt'
 const prisma = new PrismaClient();
 
 class UserController {
+  async index(request: Request, response: Response): Promise<Response> {
+    const users = await prisma.user.findMany({ select: { name: true, email: true, createdAt: true, updatedAt: true } })
+
+    return response.json({ users })
+  }
+
   async store(request: Request, response: Response): Promise<Response> {
     try {
       const { name, email, password } = request.body
