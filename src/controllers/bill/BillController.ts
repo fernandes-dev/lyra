@@ -1,5 +1,6 @@
-import { PrismaClient } from ".prisma/client"
-import { Request, Response } from "express"
+import { Request, Response } from 'express'
+
+import { PrismaClient } from '.prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -24,12 +25,17 @@ class BillController {
 
       const bill = await prisma.bill.create({
         data: {
-          title, description, date, value, type, userId
-        }
+          title,
+          description,
+          date,
+          value,
+          type,
+          userId,
+        },
       })
 
       return response.json({ bill })
-    } catch (error: any) {
+    } catch (error) {
       return response.status(400).json({ error: error.message })
     }
   }
@@ -45,7 +51,6 @@ class BillController {
       return response.status(400).json({ error: error.message })
     }
   }
-
 }
 
 export { BillController }

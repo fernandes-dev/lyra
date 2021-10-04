@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client'
-import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
+import { Request, Response } from 'express'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 class UserController {
   async index(request: Request, response: Response): Promise<Response> {
-    const users = await prisma.user.findMany({ select: { name: true, email: true, createdAt: true, updatedAt: true } })
+    const users = await prisma.user.findMany({
+      select: { name: true, email: true, createdAt: true, updatedAt: true },
+    })
 
     return response.json({ users })
   }
@@ -18,11 +20,11 @@ class UserController {
       const hashedPassword = bcrypt.hashSync(password, 8)
 
       await prisma.user.create({
-        data: { name, email, password: hashedPassword }
+        data: { name, email, password: hashedPassword },
       })
 
       return response.send()
-    } catch (error: any) {
+    } catch (error) {
       return response.status(400).json({ error: error.message })
     }
   }

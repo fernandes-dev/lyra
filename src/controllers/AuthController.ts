@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
-import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { PrismaClient } from ".prisma/client";
+import { Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+
+import { PrismaClient } from '.prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -19,10 +20,15 @@ class AuthController {
       if (!isValidPassword)
         return response.status(401).json({ error: 'Invalid email or password' })
 
-      const token = jwt.sign({ id: user.id }, process.env.SECRET || '', { expiresIn: '1d' })
+      const token = jwt.sign({ id: user.id }, process.env.SECRET || '', {
+        expiresIn: '1d',
+      })
 
-      return response.json({ user: { name: user.name, email: user.email }, token })
-    } catch (error: any) {
+      return response.json({
+        user: { name: user.name, email: user.email },
+        token,
+      })
+    } catch (error) {
       return response.status(400).json({ error: error.message })
     }
   }
