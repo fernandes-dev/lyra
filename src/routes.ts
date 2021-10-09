@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import { ensureAuthenticated } from './middlewares/ensureAuthenticated'
 import { authRoutes } from './routes/auth.routes'
 import { billRoutes } from './routes/bill/bill.routes'

@@ -1,19 +1,24 @@
-import express from 'express';
-import cors from 'cors';
-import { routes } from './routes';
-import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
+import cors from 'cors'
+import express from 'express'
 
-const port = process.env.PORT || 3333;
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated'
+import { routes } from './routes'
 
-const app = express();
+const port = process.env.PORT || 3333
 
-app.use(express.json());
-app.use(cors());
+const app = express()
 
-app.use(routes);
+app.use(express.json())
+app.use(cors())
 
-app.get('/', (request, response) => response.json({ message: 'Welcome to Lyra API' }));
+app.use(routes)
 
-app.get('/verify-auth', ensureAuthenticated, (request, response) => response.json({ message: 'Welcome to Lyra API' }));
+app.get('/', (request, response) =>
+  response.json({ message: 'Welcome to Lyra API 1' })
+)
 
-app.listen(port, () => console.log(`🚀 app running on port ${port}`));
+app.get('/verify-auth', ensureAuthenticated, (request, response) =>
+  response.send()
+)
+
+app.listen(port, () => console.log(`🚀 app running on port ${port}`))

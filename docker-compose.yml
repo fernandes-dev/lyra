@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  lyra-api-develop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/user/lyra/api/src
+    container_name: lyra-api-develop
+    expose:
+      - '3333'
+    ports:
+      - "3333:3333"
+    command: yarn dev
